@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pour Virginie</title>
+    <title>Pour Virginie - Ma Ninie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             background: radial-gradient(ellipse at center, #0a0e27 0%, #020111 100%);
             min-height: 100vh;
             overflow-x: hidden;
-            color: #e8e0f0;
+            color: #333;
         }
+
+        /* Stars */
         .stars-container {
             position: fixed;
             top: 0; left: 0;
@@ -30,6 +33,8 @@
             0%, 100% { opacity: var(--min-opacity); transform: scale(1); }
             50% { opacity: 1; transform: scale(1.3); }
         }
+
+        /* Nebulae */
         .nebula {
             position: fixed;
             border-radius: 50%;
@@ -52,214 +57,425 @@
         }
         .nebula-3 {
             top: 50%; left: 30%;
-            width: 300px; height: 300px;
+            width: 350px; height: 350px;
             background: radial-gradient(circle, #0d47a1, transparent);
             animation: nebulaDrift 30s ease-in-out infinite;
         }
         @keyframes nebulaDrift {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -20px) scale(1.1); }
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -20px); }
         }
-        .sun {
+
+        /* Shooting stars */
+        .shooting-star {
             position: fixed;
-            top: -80px; right: -80px;
-            width: 200px; height: 200px;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 215, 0, 0.8), transparent);
             border-radius: 50%;
-            background: radial-gradient(circle, #fff7b0 0%, #ffb347 40%, #ff6b35 70%, transparent 100%);
-            box-shadow: 0 0 60px rgba(255,179,71,0.4), 0 0 120px rgba(255,107,53,0.2);
-            animation: sunPulse 8s ease-in-out infinite;
-            z-index: 1;
+            animation: shoot 4s ease-in-out infinite;
+            opacity: 0;
+            z-index: 0;
             pointer-events: none;
         }
-        @keyframes sunPulse {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.05); opacity: 0.75; }
+        .shooting-star:nth-child(1) {
+            top: 20%; left: 60%;
+            animation-delay: 1s;
         }
-        .moon-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-top: 60px;
-            z-index: 2;
+        .shooting-star:nth-child(2) {
+            top: 40%; left: 30%;
+            animation-delay: 3s;
         }
-        .moon {
-            width: 180px; height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #f5f5f5 0%, #e0e0e0 30%, #bdbdbd 60%, #9e9e9e 100%);
-            box-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(200,200,255,0.3), 0 0 120px rgba(150,150,255,0.15), inset -20px -10px 30px rgba(0,0,0,0.2);
-            animation: moonGlow 4s ease-in-out infinite;
-            position: relative;
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+            5% { opacity: 1; }
+            15% { transform: translateX(-200px) translateY(200px) rotate(-45deg); opacity: 0; }
+            100% { opacity: 0; }
         }
-        .moon::before {
-            content: '';
-            position: absolute;
-            top: 20%; left: 15%;
-            width: 25px; height: 25px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.08);
-            box-shadow: 40px 20px 0 8px rgba(0,0,0,0.06), 60px 50px 0 5px rgba(0,0,0,0.05), 20px 60px 0 12px rgba(0,0,0,0.07), 80px 10px 0 3px rgba(0,0,0,0.04);
-        }
-        @keyframes moonGlow {
-            0%, 100% { box-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(200,200,255,0.3), 0 0 120px rgba(150,150,255,0.15), inset -20px -10px 30px rgba(0,0,0,0.2); }
-            50% { box-shadow: 0 0 60px rgba(255,255,255,0.7), 0 0 100px rgba(200,200,255,0.4), 0 0 160px rgba(150,150,255,0.25), inset -20px -10px 30px rgba(0,0,0,0.2); }
-        }
+
+        /* Particles */
         .particles-container {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
         .particle {
             position: absolute;
-            width: 2px; height: 2px;
-            background: rgba(255, 255, 255, 0.6);
+            bottom: -10px;
             border-radius: 50%;
-            animation: floatUp var(--float-duration) linear infinite;
+            background: rgba(255, 255, 255, 0.6);
+            animation: floatUp var(--float-duration) ease-in-out infinite;
         }
         @keyframes floatUp {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) translateX(var(--drift)); opacity: 0; }
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(var(--drift)); opacity: 0; }
         }
-        .content {
-            position: relative;
-            z-index: 10;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 100px;
-        }
-        .title {
-            text-align: center;
-            font-size: 2em;
-            margin-top: 30px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #f5f5f5, #c9b3ff, #f5f5f5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
-            animation: fadeInUp 1.5s ease-out 0.5s forwards;
-        }
-        .subtitle {
-            text-align: center;
-            font-size: 1.1em;
-            color: #b0a0d0;
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeInUp 1.5s ease-out 1s forwards;
-        }
-        .letter-section {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 30px 25px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        .letter-section p {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #e0d8f0;
-            margin-bottom: 15px;
-        }
-        .letter-section p:last-child { margin-bottom: 0; }
-        .highlight { color: #c9b3ff; font-weight: bold; }
-        .heart-highlight { color: #ff8fa3; font-weight: bold; }
-        .section-icon { text-align: center; font-size: 1.8em; margin-bottom: 15px; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .visible { animation: fadeInUp 1s ease-out forwards; }
-        .signature {
-            text-align: center;
-            margin-top: 40px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        .signature p { font-size: 1.3em; font-style: italic; color: #c9b3ff; }
-        .heart-beat {
-            display: inline-block;
-            font-size: 2em;
-            animation: heartBeat 1.5s ease-in-out infinite;
-            margin-top: 20px;
-        }
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            15% { transform: scale(1.15); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.1); }
-            60% { transform: scale(1); }
-        }
-        .shooting-star {
+
+        /* Envelope */
+        .envelope-wrapper {
             position: fixed;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
-            border-radius: 50%;
-            animation: shoot 3s ease-in-out infinite;
-            top: 15%;
-            left: -100px;
-            z-index: 1;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            cursor: pointer;
+        }
+        .envelope-wrapper.opened {
+            opacity: 0;
+            visibility: hidden;
             pointer-events: none;
         }
-        .shooting-star:nth-child(2) {
-            animation-delay: 5s;
-            top: 25%;
-            animation-duration: 4s;
+        .envelope {
+            width: 280px;
+            height: 180px;
+            position: relative;
+            transform-style: preserve-3d;
         }
-        @keyframes shoot {
-            0% { transform: translateX(0) translateY(0) rotate(-30deg); opacity: 0; }
-            5% { opacity: 1; }
-            20% { transform: translateX(calc(100vw + 200px)) translateY(100px) rotate(-30deg); opacity: 0; }
-            100% { opacity: 0; transform: translateX(calc(100vw + 200px)) translateY(100px) rotate(-30deg); }
+        .envelope-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5e6d3, #fff5eb);
+            border-radius: 5px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
         }
-        .age-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            width: 60px; height: 60px;
-            line-height: 60px;
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            color: white;
-            margin: 10px auto;
-            display: block;
-            box-shadow: 0 0 20px rgba(102,126,234,0.4);
-            animation: agePulse 3s ease-in-out infinite;
+        .envelope-body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(135deg, #e8d4c0, #f0e0d0);
+            clip-path: polygon(0 0, 50% 70%, 100% 0);
         }
-        @keyframes agePulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(102,126,234,0.4); }
-            50% { box-shadow: 0 0 40px rgba(102,126,234,0.7); }
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(180deg, #d4a574, #e8c9a0);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top center;
+            transition: transform 0.6s ease;
+            z-index: 2;
         }
-        @media (max-width: 480px) {
-            .title { font-size: 1.6em; }
-            .moon { width: 140px; height: 140px; }
-            .letter-section { padding: 22px 18px; }
-            .letter-section p { font-size: 1em; }
-            .sun { width: 150px; height: 150px; top: -60px; right: -60px; }
+        .envelope:hover .envelope-flap,
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
         }
-        .scroll-indicator {
-            position: fixed;
-            bottom: 30px;
+        .envelope-heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            z-index: 3;
+            animation: heartPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes heartPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+        .envelope-text {
+            position: absolute;
+            bottom: -50px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 100;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.3rem;
+            color: #e8e0f0;
+            white-space: nowrap;
             animation: bounce 2s ease-in-out infinite;
-            opacity: 0.7;
-            font-size: 1.5em;
-            transition: opacity 0.5s;
         }
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* Letter container (hidden until envelope opens) */
+        .letter-container {
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+            padding: 40px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .letter-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Red Heart decoration */
+        .heart-decoration {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 20px auto 30px;
+        }
+        .heart-decoration::before,
+        .heart-decoration::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 65px;
+            border-radius: 40px 40px 0 0;
+            background: #e63946;
+        }
+        .heart-decoration::before {
+            left: 40px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        .heart-decoration::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        .heart-decoration {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.1); }
+        }
+
+        /* Title */
+        .title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: #e63946;
+            text-align: center;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.6em;
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Letter sections - WHITE background */
+        .letter-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            border: 1px solid #f0e0e0;
+        }
+        .letter-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .letter-section p {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .letter-section p:last-child { margin-bottom: 0; }
+
+        /* Section icons */
+        .section-icon {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-align: center;
+            animation: bounce 2s ease-in-out infinite;
+            opacity: 0.85;
+        }
+
+        /* Highlights */
+        .highlight {
+            color: #e63946;
+            font-weight: 600;
+            font-style: italic;
+        }
+        .heart-highlight {
+            color: #e63946;
+            font-weight: 600;
+        }
+
+        /* Age badge */
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e63946 0%, #c62828 100%);
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            margin-top: 10px;
+            box-shadow: 0 3px 10px rgba(230, 57, 70, 0.4);
+            animation: heartPulse 2s ease-in-out infinite;
+        }
+
+        /* Signature */
+        .signature {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px 30px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #f0e0e0;
+            margin-top: 10px;
+        }
+        .signature p {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .heart-beat {
+            display: inline-block;
+            font-size: 2em;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            color: #e63946;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: rgba(255,255,255,0.7);
+            animation: bounce 2s ease-in-out infinite;
+            z-index: 100;
+            transition: opacity 0.5s;
+        }
+
+        /* Sun (decorative) */
+        .sun {
+            position: fixed;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #fff7b0 0%, #ffb347 40%, #ff6b35 70%, transparent 100%);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Moon */
+        .moon-container {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .moon {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 35% 35%, #f5f5f5 0%, #e0e0e0 30%, #bdbdbd 60%, #9e9e9e 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.1);
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.1); }
+            50% { box-shadow: 0 0 30px rgba(255,255,255,0.5), 0 0 80px rgba(255,255,255,0.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .letter-container {
+                padding: 20px 15px;
+            }
+            .title {
+                font-size: 2.4rem;
+            }
+            .subtitle {
+                font-size: 1.3em;
+            }
+            .letter-section {
+                padding: 20px 18px;
+            }
+            .letter-section p {
+                font-size: 1em;
+            }
+            .envelope {
+                width: 220px;
+                height: 140px;
+            }
+            .heart-decoration {
+                width: 60px;
+                height: 60px;
+            }
+            .heart-decoration::before,
+            .heart-decoration::after {
+                width: 30px;
+                height: 50px;
+                border-radius: 30px 30px 0 0;
+            }
+            .heart-decoration::before {
+                left: 30px;
+            }
+            .moon-container {
+                top: 20px;
+                right: 20px;
+            }
+            .moon {
+                width: 40px;
+                height: 40px;
+            }
+            .nebula-1 { width: 300px; height: 300px; }
+            .nebula-2 { width: 250px; height: 250px; }
+            .nebula-3 { width: 200px; height: 200px; }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1.1em;
+            }
+            .letter-section {
+                padding: 18px 15px;
+                margin-bottom: 15px;
+            }
+            .letter-section p {
+                font-size: 0.95em;
+                line-height: 1.7;
+            }
+            .envelope {
+                width: 180px;
+                height: 115px;
+            }
+            .envelope-text {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -274,47 +490,55 @@
     <div class="shooting-star"></div>
     <div class="sun"></div>
 
-    <!-- Content -->
-    <div class="content">
-        <div class="moon-container">
-            <div class="moon"></div>
-        </div>
+    <div class="moon-container">
+        <div class="moon"></div>
+    </div>
 
-        <h1 class="title">Pour toi, Virginie</h1>
+    <!-- Envelope animation -->
+    <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body"></div>
+            <div class="envelope-heart">&#10084;</div>
+            <div class="envelope-text">Clique pour ouvrir &#10084;</div>
+        </div>
+    </div>
+
+    <!-- Letter content -->
+    <div class="letter-container" id="letterContainer">
+        <!-- Red Heart -->
+        <div class="heart-decoration"></div>
+
+        <h1 class="title">Ma Ninie</h1>
         <p class="subtitle">Ma lune dans l'immensit&eacute; de l'univers &#10024;</p>
 
         <div class="letter-section" data-delay="0">
             <div class="section-icon">&#127769;</div>
             <p>Mon amour,</p>
-            <p>Demain tu souffles tes <span class="highlight">44 bougies</span>, et je voulais que tu saches &agrave; quel point tu illumines ma vie, comme la lune illumine la nuit la plus sombre.</p>
-        </div>
-
-        <div class="letter-section" data-delay="200">
-            <div class="section-icon">&#11088;</div>
             <p>Tu es tout simplement <span class="heart-highlight">la meilleure</span>. La meilleure personne que je connaisse, la meilleure partenaire dont je pouvais r&ecirc;ver, la meilleure compagne de vie.</p>
         </div>
 
-        <div class="letter-section" data-delay="400">
+        <div class="letter-section" data-delay="200">
             <div class="section-icon">&#128514;</div>
             <p>Tu <span class="highlight">me fais rire</span> comme personne d'autre. Ton humour, tes r&eacute;pliques, ta fa&ccedil;on de voir la vie... Chaque jour &agrave; tes c&ocirc;t&eacute;s est rempli de joie et d'&eacute;clats de rire.</p>
         </div>
 
-        <div class="letter-section" data-delay="600">
+        <div class="letter-section" data-delay="400">
             <div class="section-icon">&#10024;</div>
             <p>On passe des <span class="heart-highlight">moments extraordinaires</span> ensemble. Chaque instant partag&eacute; avec toi est un tr&eacute;sor, une &eacute;toile de plus dans notre galaxie &agrave; nous.</p>
         </div>
 
-        <div class="letter-section" data-delay="800">
+        <div class="letter-section" data-delay="600">
             <div class="section-icon">&#128171;</div>
             <p>Tu es <span class="highlight">mignonne</span>, tu es <span class="highlight">jolie</span>, tu es <span class="highlight">dr&ocirc;le</span>... Tu es tout ce que j'ai toujours voulu et tellement plus encore.</p>
         </div>
 
-        <div class="letter-section" data-delay="1000">
+        <div class="letter-section" data-delay="800">
             <div class="section-icon">&#127775;</div>
             <p>Comme le soleil a besoin de la lune, j'ai besoin de toi. Tu es mon &eacute;clat dans l'obscurit&eacute;, ma lumi&egrave;re quand tout semble sombre, mon &eacute;toile polaire qui guide chacun de mes pas.</p>
         </div>
 
-        <div class="letter-section" data-delay="1200">
+        <div class="letter-section" data-delay="1000">
             <div class="section-icon">&#128156;</div>
             <p>Je t'<span class="heart-highlight">adore</span>, Virginie. De tout mon c&#339;ur, de toute mon &acirc;me, &agrave; l'infini et au-del&agrave; des &eacute;toiles.</p>
             <p>Joyeux anniversaire, mon amour. &#127874;</p>
@@ -324,7 +548,7 @@
         <div class="signature">
             <p>Avec tout mon amour,</p>
             <p>Pour toujours et &agrave; jamais &#127769;</p>
-            <span class="heart-beat">&#128156;</span>
+            <span class="heart-beat">&#10084;</span>
         </div>
     </div>
 
@@ -333,7 +557,7 @@
     <script>
         // Generate stars
         const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 150; i++) {
+        for (let i = 0; i < 200; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             const size = Math.random() * 3 + 1;
@@ -361,31 +585,54 @@
             particlesContainer.appendChild(particle);
         }
 
-        // Scroll reveal for letter sections
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const delay = entry.target.getAttribute('data-delay') || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, parseInt(delay));
-                    observer.unobserve(entry.target);
-                }
+        // Envelope open
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const wrapper = document.getElementById('envelopeWrapper');
+            const letterContainer = document.getElementById('letterContainer');
+
+            envelope.querySelector('.envelope-flap').style.transform = 'rotateX(180deg)';
+
+            setTimeout(() => {
+                wrapper.classList.add('opened');
+                letterContainer.classList.add('visible');
+                // Trigger letter sections animation
+                animateLetterSections();
+            }, 800);
+        }
+
+        // Animate letter sections on scroll and on reveal
+        function animateLetterSections() {
+            const sections = document.querySelectorAll('.letter-section');
+            sections.forEach((section, index) => {
+                const delay = parseInt(section.getAttribute('data-delay')) || 0;
+                setTimeout(() => {
+                    section.classList.add('visible');
+                }, delay + 300);
             });
-        }, { threshold: 0.2 });
+        }
 
-        document.querySelectorAll('.letter-section, .signature').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Hide scroll indicator after scrolling
+        // Scroll indicator hide on scroll
         window.addEventListener('scroll', () => {
             const indicator = document.getElementById('scrollIndicator');
             if (window.scrollY > 100) {
                 indicator.style.opacity = '0';
             } else {
-                indicator.style.opacity = '0.7';
+                indicator.style.opacity = '1';
             }
+        });
+
+        // Intersection Observer for sections (for scrolling after initial reveal)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.letter-section').forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
