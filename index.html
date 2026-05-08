@@ -318,23 +318,13 @@
         }
 
         /* Age badge */
-        .age-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #e63946 0%, #c62828 100%);
-            color: white;
-            font-size: 1.5em;
-            font-weight: bold;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            border-radius: 50%;
-            margin-top: 10px;
-            box-shadow: 0 3px 10px rgba(230, 57, 70, 0.4);
-            animation: heartPulse 2s ease-in-out infinite;
-        }
+        .age-badge { display: inline-block; background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%); background-size: 200% 200%; color: white; font-size: 3em; font-weight: bold; width: 100px; height: 100px; line-height: 100px; text-align: center; border-radius: 50%; margin: 20px auto; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 140, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2); animation: agePulse 2s ease-in-out infinite, ageGlow 3s ease-in-out infinite, ageShimmer 4s linear infinite; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 140, 0, 0.4); border: 3px solid rgba(255, 255, 255, 0.5); position: relative; }
 
-        /* Signature */
+        
+        @keyframes agePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes ageGlow { 0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 140, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2); } 50% { box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 140, 0, 0.8), 0 0 90px rgba(255, 215, 0, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.4); } }
+        @keyframes ageShimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+`n        /* Signature */
         .signature {
             background: linear-gradient(135deg, #fdf6e3, #f5e6d3);
             border-radius: 12px;
