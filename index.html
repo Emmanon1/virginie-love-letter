@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Virginie</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: radial-gradient(ellipse at center, #0a0e27 0%, #020111 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #e8e0f0;
+        }
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: var(--min-opacity); transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .nebula-1 {
+            top: 10%; left: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #4a0e8f, transparent);
+            animation: nebulaDrift 20s ease-in-out infinite;
+        }
+        .nebula-2 {
+            bottom: 20%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #1a237e, transparent);
+            animation: nebulaDrift 25s ease-in-out infinite reverse;
+        }
+        .nebula-3 {
+            top: 50%; left: 30%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #0d47a1, transparent);
+            animation: nebulaDrift 30s ease-in-out infinite;
+        }
+        @keyframes nebulaDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -20px) scale(1.1); }
+        }
+        .sun {
+            position: fixed;
+            top: -80px; right: -80px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff7b0 0%, #ffb347 40%, #ff6b35 70%, transparent 100%);
+            box-shadow: 0 0 60px rgba(255,179,71,0.4), 0 0 120px rgba(255,107,53,0.2);
+            animation: sunPulse 8s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 0.75; }
+        }
+        .moon-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px;
+            z-index: 2;
+        }
+        .moon {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #f5f5f5 0%, #e0e0e0 30%, #bdbdbd 60%, #9e9e9e 100%);
+            box-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(200,200,255,0.3), 0 0 120px rgba(150,150,255,0.15), inset -20px -10px 30px rgba(0,0,0,0.2);
+            animation: moonGlow 4s ease-in-out infinite;
+            position: relative;
+        }
+        .moon::before {
+            content: '';
+            position: absolute;
+            top: 20%; left: 15%;
+            width: 25px; height: 25px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.08);
+            box-shadow: 40px 20px 0 8px rgba(0,0,0,0.06), 60px 50px 0 5px rgba(0,0,0,0.05), 20px 60px 0 12px rgba(0,0,0,0.07), 80px 10px 0 3px rgba(0,0,0,0.04);
+        }
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(200,200,255,0.3), 0 0 120px rgba(150,150,255,0.15), inset -20px -10px 30px rgba(0,0,0,0.2); }
+            50% { box-shadow: 0 0 60px rgba(255,255,255,0.7), 0 0 100px rgba(200,200,255,0.4), 0 0 160px rgba(150,150,255,0.25), inset -20px -10px 30px rgba(0,0,0,0.2); }
+        }
+        .particles-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: floatUp var(--float-duration) linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(var(--drift)); opacity: 0; }
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+        .title {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #f5f5f5, #c9b3ff, #f5f5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            color: #b0a0d0;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1s forwards;
+        }
+        .letter-section {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .letter-section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #e0d8f0;
+            margin-bottom: 15px;
+        }
+        .letter-section p:last-child { margin-bottom: 0; }
+        .highlight { color: #c9b3ff; font-weight: bold; }
+        .heart-highlight { color: #ff8fa3; font-weight: bold; }
+        .section-icon { text-align: center; font-size: 1.8em; margin-bottom: 15px; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .visible { animation: fadeInUp 1s ease-out forwards; }
+        .signature {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .signature p { font-size: 1.3em; font-style: italic; color: #c9b3ff; }
+        .heart-beat {
+            display: inline-block;
+            font-size: 2em;
+            animation: heartBeat 1.5s ease-in-out infinite;
+            margin-top: 20px;
+        }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(1); }
+        }
+        .shooting-star {
+            position: fixed;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
+            border-radius: 50%;
+            animation: shoot 3s ease-in-out infinite;
+            top: 15%;
+            left: -100px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .shooting-star:nth-child(2) {
+            animation-delay: 5s;
+            top: 25%;
+            animation-duration: 4s;
+        }
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(-30deg); opacity: 0; }
+            5% { opacity: 1; }
+            20% { transform: translateX(calc(100vw + 200px)) translateY(100px) rotate(-30deg); opacity: 0; }
+            100% { opacity: 0; transform: translateX(calc(100vw + 200px)) translateY(100px) rotate(-30deg); }
+        }
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            width: 60px; height: 60px;
+            line-height: 60px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            margin: 10px auto;
+            display: block;
+            box-shadow: 0 0 20px rgba(102,126,234,0.4);
+            animation: agePulse 3s ease-in-out infinite;
+        }
+        @keyframes agePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(102,126,234,0.4); }
+            50% { box-shadow: 0 0 40px rgba(102,126,234,0.7); }
+        }
+        @media (max-width: 480px) {
+            .title { font-size: 1.6em; }
+            .moon { width: 140px; height: 140px; }
+            .letter-section { padding: 22px 18px; }
+            .letter-section p { font-size: 1em; }
+            .sun { width: 150px; height: 150px; top: -60px; right: -60px; }
+        }
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            animation: bounce 2s ease-in-out infinite;
+            opacity: 0.7;
+            font-size: 1.5em;
+            transition: opacity 0.5s;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="stars-container" id="stars"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="nebula nebula-3"></div>
+    <div class="particles-container" id="particles"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="sun"></div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="moon-container">
+            <div class="moon"></div>
+        </div>
+
+        <h1 class="title">Pour toi, Virginie</h1>
+        <p class="subtitle">Ma lune dans l'immensit&eacute; de l'univers &#10024;</p>
+
+        <div class="letter-section" data-delay="0">
+            <div class="section-icon">&#127769;</div>
+            <p>Mon amour,</p>
+            <p>Demain tu souffles tes <span class="highlight">44 bougies</span>, et je voulais que tu saches &agrave; quel point tu illumines ma vie, comme la lune illumine la nuit la plus sombre.</p>
+        </div>
+
+        <div class="letter-section" data-delay="200">
+            <div class="section-icon">&#11088;</div>
+            <p>Tu es tout simplement <span class="heart-highlight">la meilleure</span>. La meilleure personne que je connaisse, la meilleure partenaire dont je pouvais r&ecirc;ver, la meilleure compagne de vie.</p>
+        </div>
+
+        <div class="letter-section" data-delay="400">
+            <div class="section-icon">&#128514;</div>
+            <p>Tu <span class="highlight">me fais rire</span> comme personne d'autre. Ton humour, tes r&eacute;pliques, ta fa&ccedil;on de voir la vie... Chaque jour &agrave; tes c&ocirc;t&eacute;s est rempli de joie et d'&eacute;clats de rire.</p>
+        </div>
+
+        <div class="letter-section" data-delay="600">
+            <div class="section-icon">&#10024;</div>
+            <p>On passe des <span class="heart-highlight">moments extraordinaires</span> ensemble. Chaque instant partag&eacute; avec toi est un tr&eacute;sor, une &eacute;toile de plus dans notre galaxie &agrave; nous.</p>
+        </div>
+
+        <div class="letter-section" data-delay="800">
+            <div class="section-icon">&#128171;</div>
+            <p>Tu es <span class="highlight">mignonne</span>, tu es <span class="highlight">jolie</span>, tu es <span class="highlight">dr&ocirc;le</span>... Tu es tout ce que j'ai toujours voulu et tellement plus encore.</p>
+        </div>
+
+        <div class="letter-section" data-delay="1000">
+            <div class="section-icon">&#127775;</div>
+            <p>Comme le soleil a besoin de la lune, j'ai besoin de toi. Tu es mon &eacute;clat dans l'obscurit&eacute;, ma lumi&egrave;re quand tout semble sombre, mon &eacute;toile polaire qui guide chacun de mes pas.</p>
+        </div>
+
+        <div class="letter-section" data-delay="1200">
+            <div class="section-icon">&#128156;</div>
+            <p>Je t'<span class="heart-highlight">adore</span>, Virginie. De tout mon c&#339;ur, de toute mon &acirc;me, &agrave; l'infini et au-del&agrave; des &eacute;toiles.</p>
+            <p>Joyeux anniversaire, mon amour. &#127874;</p>
+            <div class="age-badge">44</div>
+        </div>
+
+        <div class="signature">
+            <p>Avec tout mon amour,</p>
+            <p>Pour toujours et &agrave; jamais &#127769;</p>
+            <span class="heart-beat">&#128156;</span>
+        </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">&#8595;</div>
+
+    <script>
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.setProperty('--min-opacity', Math.random() * 0.3 + 0.1);
+            star.style.animationDelay = Math.random() * 5 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.setProperty('--float-duration', (Math.random() * 15 + 10) + 's');
+            particle.style.setProperty('--drift', (Math.random() * 100 - 50) + 'px');
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.width = (Math.random() * 2 + 1) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Scroll reveal for letter sections
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, parseInt(delay));
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.letter-section, .signature').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Hide scroll indicator after scrolling
+        window.addEventListener('scroll', () => {
+            const indicator = document.getElementById('scrollIndicator');
+            if (window.scrollY > 100) {
+                indicator.style.opacity = '0';
+            } else {
+                indicator.style.opacity = '0.7';
+            }
+        });
+    </script>
+</body>
+</html>
